@@ -1,0 +1,6 @@
+<div class="row m-0">
+    <app-sidebar class="col-lg-3 p-lg-0 p-md-3 m-0" [categories]="getCategories()" (filterByPrice)="filterByPrice($event)" (filterByCategory)="filterByCategory($event)"></app-sidebar>
+    <main class="col-lg-9 col-12 m-0 card-group">
+        <app-product *ngFor="let product of filteredProducts" (buyEvent)="addToCart($event)" [product]="product"></app-product>
+    </main>
+</div>

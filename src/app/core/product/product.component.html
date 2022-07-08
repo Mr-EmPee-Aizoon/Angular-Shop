@@ -1,0 +1,27 @@
+<div class="container-fluid d-flex justify-content-center">
+  <div class="card m-2">
+    <div
+      class="card-img-top"
+      style="background-image: url('{{ product.imagePath }}');"
+      alt="Card image cap"
+    ></div>
+    <div class="card-body">
+      <div>
+        <h5 class="card-title">{{ product.title }}</h5>
+        <h5 class="card-text">{{ product.price | currency: "EUR" }}</h5>
+        <hr />
+        <p class="card-text">{{ product.description }}</p>
+      </div>
+      <div>
+        <div class="btn-group" *ngIf="buying">
+          <button (click)="addToCart()" class="btn btn-success">Confirm</button>
+          <button (click)="buying = false" class="btn btn-danger">Cancel</button>
+        </div>
+        <div class="btn-group" *ngIf="!buying">
+          <button (click)="buying = true" class="btn btn-success">Buy now</button>
+          <button (click)="editProduct()" class="btn btn-warning">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

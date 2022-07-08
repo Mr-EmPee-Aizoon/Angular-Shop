@@ -1,0 +1,24 @@
+<aside class="container-fluid pt-4">
+    <div class="d-flex flex-column">
+        <div class="form-group">
+            <h2>Price</h2>
+            <hr />
+            <div class="row align-items-center">
+                <label class="col">{{ priceRange.min | currency:'EUR' }}</label>
+                <label class="col text-right">{{ defaultFilterPrice | currency:'EUR' }}</label>
+            </div>
+            <input #priceRange type="range" min="0" [max]="defaultFilterPrice" class="form-range w-100" [value]="filterPrice" (input)="filterPrice = priceRange.value">
+            <div class="row align-items-center justify-content-center">
+                <label (click)="doPriceFilter()" class="btn btn-success text-center">Filter for {{ priceRange.value | currency:'EUR'}}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <h2>Brands</h2>
+            <hr />
+            <ul>
+                <li (click)="doCategoryFilter('')" [class.active]="!selectedCategory">All</li>
+                <li *ngFor="let category of categories" (click)="doCategoryFilter(category)" [class.active]="selectedCategory == category">{{ category }}</li>
+            </ul>
+        </div>
+    </div>
+</aside>

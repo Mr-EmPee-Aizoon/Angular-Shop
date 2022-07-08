@@ -1,0 +1,19 @@
+nav {
+    height: 100%;
+    background-color: rgb(71, 69, 69);
+    
+    color: white;
+    font-variant: small-caps;
+
+    border-radius: 1rem;
+}
+
+.nav-item {
+
+    cursor: pointer;
+    padding: 1rem;
+}
+
+.nav-item.active {
+    font-weight: bold;
+}

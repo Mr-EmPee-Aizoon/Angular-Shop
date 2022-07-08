@@ -3,18 +3,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "ng serve",
+      "name": "Launch Angular",  // name of task
       "type": "pwa-chrome",
       "request": "launch",
-      "preLaunchTask": "npm: start",
-      "url": "http://localhost:4200/"
-    },
-    {
-      "name": "ng test",
-      "type": "chrome",
-      "request": "launch",
-      "preLaunchTask": "npm: test",
-      "url": "http://localhost:9876/debug.html"
+      "runtimeExecutable": "/opt/apps/cn.google.chrome/files/chrome",
+      "preLaunchTask": "npm: start", // task of task.json
+      "url": "http://localhost:4200/", // route where it will launch
+      "webRoot": "${workspaceFolder}" // path of work space
     }
   ]
 }

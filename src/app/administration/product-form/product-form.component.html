@@ -1,0 +1,39 @@
+<div class="row m-0 justify-content-center" style="height: 80%;" [formGroup]="formGroup">
+    <div class="col-lg-8 col-md-12">
+        <div class="row w-100 p-5">
+            <div class="form-group col-xl-4">
+                <label>Title <abbr title="Required" class="text-danger font-weight-bold" *ngIf="title?.errors?.['required']">*</abbr></label>
+                <input class="form-control" type="text" formControlName="title">
+                <small class="text-danger" *ngIf="title?.touched && title?.errors?.['maxlength']">The title length must be less then 22 chars</small>
+            </div>
+            <div class="form-group col-xl-4">
+                <label>Category <abbr title="Required" class="text-danger font-weight-bold" *ngIf="category?.errors?.['required']">*</abbr> </label>
+                <input class="form-control" type="text" formControlName="category">
+            </div>
+            <div class="form-group col-xl-2 col-6">
+                <label>Size <abbr title="Required" class="text-danger font-weight-bold" *ngIf="size?.errors?.['required']">*</abbr></label>
+                <input class="form-control" type="text" formControlName="size">
+            </div>
+            <div class="form-group col-xl-2 col-6">
+                <label>Price <abbr title="Required" class="text-danger font-weight-bold" *ngIf="price?.errors?.['required']">*</abbr></label>
+                <input class="form-control" type="number" step="5" min="0" formControlName="price">
+                <small class="text-danger" *ngIf="price?.touched && price?.errors?.['min']">Invalid price</small>
+            </div>
+        </div>
+        <div class="row w-100 p-lg-5 p-1">
+            <div class="form-group col-12">
+                <label>Description <abbr title="Required" class="text-danger font-weight-bold" *ngIf="description?.errors?.['required']">*</abbr></label>
+                <textarea class="form-control" formControlName="description"></textarea>
+                <small class="text-danger" *ngIf="description?.touched && description?.errors?.['maxlength']">The description length must be less then 151 chars</small>
+            </div>
+        </div>
+
+        <div class="row w-100 m-0">
+            <button *ngIf="!product" (click)="createProduct()" class="btn btn-success w-100" [class.disabled]="formGroup.invalid">Create</button>
+            <div *ngIf="product" class="btn-group w-100">
+                <button (click)="updateProduct()" class="btn btn-success" [class.disabled]="formGroup.invalid">Update</button>
+                <button (click)="deleteProduct()" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
