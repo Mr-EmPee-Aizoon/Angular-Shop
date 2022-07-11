@@ -1,35 +1,39 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ModelModule } from '../../model.module';
 import { Product } from '../../product';
-import { RestRepositoryService } from './rest-repository.service';
 
 @Injectable({
   providedIn: ModelModule
 })
 export class ProductRepositoryService {
 
-  constructor(
-    private repo:RestRepositoryService
-  ) { }
+  private dbURL = "http://localhost:8081/api/v1/products";
 
-  getProducts() {
-    return this.repo.getProducts();
+  constructor(private httpClient:HttpClient) { }
+
+  public getProducts() {
+    return this.httpClient.get<Product[]>(this.dbURL)
   }
 
-  getProductByID(prodID:number) {
-    return this.repo.getProductByID(prodID);
+  public getProductByID(prodID:number) {
+    return this.httpClient.get<Product>(this.dbURL+ "?prodID=" + prodID)
   }
 
-  updateProduct(prodID:number, product:Product) {
-    return this.repo.updateProduct(prodID, product);
+  public getProductByCategory(categoryID:number) {
+    return this.httpClient.get<Product[]>(this.dbURL+ "?categoryID=" + categoryID)
   }
 
-  removeProduct(prodID:number) {
-    return this.repo.removeProduct(prodID);
+  public addProduct(product:Product) {
+    return this.httpClient.post<Product>(this.dbURL, product)
   }
 
-  addProduct(product:Product) {
-    return this.repo.addProduct(product);
+  public removeProduct(prodID:number) {
+    return this.httpClient.delete<Product>(this.dbURL + prodID)
+  }
+
+  public updateProduct(prodID:number, product:Product) {
+    return this.httpClient.put<Product>(this.dbURL+ "/" + prodID, product)
   }
 
 }

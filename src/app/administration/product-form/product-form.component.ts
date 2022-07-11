@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from 'src/app/model/category';
 import { Product } from 'src/app/model/product';
+import { CategoryRepositoryService } from 'src/app/model/services/repositories/category-repository.service';
 import { ProductRepositoryService } from 'src/app/model/services/repositories/product-repository.service';
 
 @Component({
@@ -11,6 +13,7 @@ import { ProductRepositoryService } from 'src/app/model/services/repositories/pr
 })
 export class ProductFormComponent implements OnInit {
 
+  public categories:Category[] = [];
   public product!:Product;
   public formGroup = new FormGroup(
     {
@@ -18,7 +21,7 @@ export class ProductFormComponent implements OnInit {
         [Validators.required, Validators.maxLength(22)]
       )),
       size: new FormControl("", Validators.required),
-      category: new FormControl("", Validators.required),
+      category: new FormControl("-1", Validators.required),
       price: new FormControl("", Validators.compose(
         [Validators.required, Validators.min(0)]
       )),
@@ -30,6 +33,7 @@ export class ProductFormComponent implements OnInit {
 
   constructor(
     private productRepo:ProductRepositoryService,
+    private categoriesRepo:CategoryRepositoryService,
     private router:Router,
     private route:ActivatedRoute
   ) {
@@ -37,6 +41,13 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.categoriesRepo.getCategories().subscribe(
+      (categories) => {
+        this.categories = categories;
+      }
+    )
+
     this.route.paramMap.subscribe(
       (params) => {
         let prodID = params.get("prodID");
@@ -46,7 +57,7 @@ export class ProductFormComponent implements OnInit {
               this.product = product;
               this.title?.setValue(product.title);
               this.size?.setValue(product.size);
-              this.category?.setValue(product.category);
+              this.category?.setValue(product.categoryID);
               this.price?.setValue(String(product.price));
               this.description?.setValue(product.description);
             }
@@ -104,7 +115,7 @@ export class ProductFormComponent implements OnInit {
       this.product.title = <string>this.title?.value;
       this.product.description = <string>this.description?.value;
       this.product.price = Number(this.price?.value);
-      this.product.category = <string>this.category?.value;
+      this.product.categoryID = <string>this.category?.value;
       this.product.size = <string>this.size?.value;
 
       this.productRepo.updateProduct(this.product.id, this.product).subscribe(

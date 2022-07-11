@@ -16,8 +16,8 @@
             <h2>Brands</h2>
             <hr />
             <ul>
-                <li (click)="doCategoryFilter('')" [class.active]="!selectedCategory">All</li>
-                <li *ngFor="let category of categories" (click)="doCategoryFilter(category)" [class.active]="selectedCategory == category">{{ category }}</li>
+                <li (click)="doCategoryFilter(undefined)" [class.active]="!selectedCategory">All</li>
+                <li *ngFor="let category of categories" (click)="doCategoryFilter(category)" [class.active]="selectedCategory == category.id">{{ category.name }}</li>
             </ul>
         </div>
     </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from 'src/app/model/category';
 import { Product } from 'src/app/model/product';
 import { CartService } from 'src/app/model/services/cart.service';
 import { ProductRepositoryService } from 'src/app/model/services/repositories/product-repository.service';
@@ -10,8 +11,7 @@ import { ProductRepositoryService } from 'src/app/model/services/repositories/pr
 })
 export class ProductsShowcaseComponent implements OnInit {
 
-  private products:Product[] = [];
-  filteredProducts:Product[] = this.products;
+  products:Product[] = [];
 
   constructor(
     private productRepository:ProductRepositoryService,
@@ -19,12 +19,7 @@ export class ProductsShowcaseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productRepository.getProducts().subscribe(
-      (products) => {
-        this.products = products;
-        this.filteredProducts = this.products;
-      }
-    );
+    this.filterByCategory(undefined);
   }
 
   addToCart(product:Product) {
@@ -32,31 +27,25 @@ export class ProductsShowcaseComponent implements OnInit {
   }
 
   filterByPrice(maxPrice:number) {
-    this.filteredProducts = this.products.filter(
+    this.products = this.products.filter(
       (product) => product.price <= maxPrice
     )
   }
 
-  filterByCategory(category:string) {
-    if(category) {
-      this.filteredProducts = this.products.filter(
-        (product) => product.category == category
+  filterByCategory(category?:Category) {
+    if(category != undefined) {
+      this.productRepository.getProductByCategory(category.id).subscribe(
+        (products) => {
+          this.products = products;
+        }
       )
     } else {
-      this.filteredProducts = this.products;
+      this.productRepository.getProducts().subscribe(
+        (products) => {
+          this.products = products;
+        }
+      )
     }
-  }
-
-  getCategories() {
-    let categories:string[] = [];
-
-    for(let prod of this.products) {
-      if(!categories.includes(prod.category)) {
-        categories.push(prod.category);
-      }
-    }
-
-    return categories;
   }
 
 }

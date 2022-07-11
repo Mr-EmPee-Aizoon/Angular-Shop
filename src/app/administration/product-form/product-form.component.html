@@ -7,8 +7,11 @@
                 <small class="text-danger" *ngIf="title?.touched && title?.errors?.['maxlength']">The title length must be less then 22 chars</small>
             </div>
             <div class="form-group col-xl-4">
-                <label>Category <abbr title="Required" class="text-danger font-weight-bold" *ngIf="category?.errors?.['required']">*</abbr> </label>
-                <input class="form-control" type="text" formControlName="category">
+                <label>Category <abbr title="Required" class="text-danger font-weight-bold" *ngIf="category?.value == '-1'">*</abbr> </label>
+                <select class="form-control" formControlName="category">
+                    <option value="-1">Choose a category</option>
+                    <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+                  </select>
             </div>
             <div class="form-group col-xl-2 col-6">
                 <label>Size <abbr title="Required" class="text-danger font-weight-bold" *ngIf="size?.errors?.['required']">*</abbr></label>
