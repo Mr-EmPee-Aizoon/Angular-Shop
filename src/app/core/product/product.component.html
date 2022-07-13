@@ -17,9 +17,10 @@
           <button (click)="addToCart()" class="btn btn-success">Confirm</button>
           <button (click)="buying = false" class="btn btn-danger">Cancel</button>
         </div>
+
         <div class="btn-group" *ngIf="!buying">
           <button (click)="buying = true" class="btn btn-success">Buy now</button>
-          <button (click)="editProduct()" class="btn btn-warning">Edit</button>
+          <button *ngIf="user?.isAdmin()" (click)="editProduct()" class="btn btn-warning">Edit</button>
         </div>
       </div>
     </div>

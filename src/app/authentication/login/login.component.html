@@ -1,0 +1,21 @@
+<div class="row m-0 justify-content-center" style="height: 80%;" [formGroup]="formGroup">
+    <div class="col-xl-4 col-lg-8 col-md-12">
+        <div class="row w-100 p-5">
+            <div class="form-group col-12">
+                <label>Username <abbr title="Required" class="text-danger font-weight-bold" *ngIf="username?.errors?.['required']">*</abbr></label>
+                <input class="form-control" type="text" formControlName="username">
+                <small class="text-danger" *ngIf="username?.touched && username?.errors?.['minlength']">The username length must be at least 3chars</small>
+            </div>
+        </div>
+        <div class="row w-100 p-lg-5 p-1">
+            <div class="form-group col-12">
+                <label>Password <abbr title="Required" class="text-danger font-weight-bold" *ngIf="password?.errors?.['required']">*</abbr></label>
+                <input type="password" class="form-control" formControlName="password">
+            </div>
+        </div>
+
+        <div class="row w-100 m-0">
+            <button (click)="login()" class="btn btn-success w-100" [class.disabled]="formGroup.invalid">Login</button>
+        </div>
+    </div>
+</div>

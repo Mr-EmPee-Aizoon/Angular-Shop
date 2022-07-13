@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductsShowcaseComponent } from './products-showcase/products-showcase.component';
 import { RouterModule } from '@angular/router';
 import { AdministrationModule } from '../administration/administration.module';
+import { AuthenticationModule } from '../authentication/authentication.module';
 
 
 
@@ -23,6 +24,7 @@ import { AdministrationModule } from '../administration/administration.module';
   ],
   imports: [
     AdministrationModule,
+    AuthenticationModule,
     CommonModule,
     ModelModule,
     RouterModule

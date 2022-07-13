@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/model/product';
+import { UserService } from 'src/app/model/services/user.service';
 
 @Component({
   selector: 'app-product',
@@ -16,8 +17,13 @@ export class ProductComponent {
 
   constructor(
     private router:Router,
+    private userService:UserService
   ) {
 
+  }
+
+  get user() {
+    return this.userService.getUser();
   }
 
   addToCart() {
