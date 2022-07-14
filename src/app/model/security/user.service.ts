@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../user';
+import { User } from './user';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -26,8 +26,8 @@ export class UserService {
     }
   }
 
-  login(username:string, password:string) {
-    return this.httpClient.post<any>(this.dbURL + "login", {
+  login(username:string, password:string, onSuccess:() => void, onFail:() => void) {
+    this.httpClient.post<any>(this.dbURL + "login", {
       "username": username,
       "password": password
     }).subscribe(
@@ -37,6 +37,12 @@ export class UserService {
 
         this.saveToken();
         this.saveUser();
+      },
+      () => {
+        onFail();
+      },
+      () => {
+        onSuccess();
       }
     );
   }

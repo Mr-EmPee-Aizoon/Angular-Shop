@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from 'src/app/model/services/user.service';
+import { UserService } from 'src/app/model/security/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  public loginTries = 0;
 
   public formGroup = new FormGroup(
     {
@@ -25,6 +27,9 @@ export class LoginComponent {
   ) {
 
   }
+  ngOnInit(): void {
+    this.loginTries = 0;
+  }
 
   get username() {
     return this.formGroup.get("username");
@@ -36,12 +41,17 @@ export class LoginComponent {
 
   login() {
     if(this.formGroup.valid) {
-      this.userService.login(<string>this.username?.value, <string>this.password?.value)
-      .add(
+      this.userService.login(<string>this.username?.value, <string>this.password?.value,
+        
         () => {
           this.router.navigateByUrl("/home");
+        },
+
+        () => {
+          this.loginTries++;
+          this.formGroup.reset();
         }
-      )
+        );
     }
   }
 

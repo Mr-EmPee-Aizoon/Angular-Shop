@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/model/product';
-import { UserService } from 'src/app/model/services/user.service';
+import { UserService } from 'src/app/model/security/user.service';
 
 @Component({
   selector: 'app-product',
@@ -32,7 +32,7 @@ export class ProductComponent {
   }
 
   editProduct() {
-    this.router.navigateByUrl("/home/productForm/" + this.product.id)
+    this.router.navigateByUrl("/home/administration/productForm/" + this.product.id)
   }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
-import { UserService } from '../services/user.service';
+import { UserService } from '../user.service';
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
